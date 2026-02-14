@@ -1,0 +1,115 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1571.vb_423c255d6d9">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2277.v00573e73ddf1"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2277.v00573e73ddf1">
+      <jobProperties/>
+      <triggers/>
+      <parameters>
+        <string>ENVIRONMENT</string>
+        <string>BRANCH_NAME</string>
+        <string>RUN_TESTS</string>
+      </parameters>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>2</daysToKeep>
+        <numToKeep>2</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+        <removeLastBuild>false</removeLastBuild>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>BRANCH_NAME</name>
+          <description>Enter the branch name to build</description>
+          <defaultValue>main</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>ENVIRONMENT</name>
+          <description>Select the environment</description>
+          <choices>
+            <string>DEV</string>
+            <string>QA</string>
+            <string>PROD</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>RUN_TESTS</name>
+          <description>Run Maven tests?</description>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@4255.vd9c37f80fd8a_">
+    <script>pipeline {
+    agent any
+
+    tools {
+        maven &apos;maven3.6&apos;
+        jdk &apos;jdk17&apos;
+    }
+
+    parameters {
+        string(
+            name: &apos;BRANCH_NAME&apos;,
+            defaultValue: &apos;main&apos;,
+            description: &apos;Enter the branch name to build&apos;
+        )
+
+        choice(
+            name: &apos;ENVIRONMENT&apos;,
+            choices: [&apos;DEV&apos;, &apos;QA&apos;, &apos;PROD&apos;],
+            description: &apos;Select the environment&apos;
+        )
+
+        booleanParam(
+            name: &apos;RUN_TESTS&apos;,
+            defaultValue: true,
+            description: &apos;Run Maven tests?&apos;
+        )
+    }
+
+    stages {
+
+        stage(&apos;Checkout Code&apos;) {
+            steps {
+                echo &quot;Checking out branch: ${params.BRANCH_NAME}&quot;
+                git branch: &quot;${params.BRANCH_NAME}&quot;,
+                    url: &apos;https://github.com/kishanops/Boardgame.git&apos;
+            }
+        }
+
+        stage(&apos;Build&apos;) {
+            steps {
+                echo &quot;Building for ${params.ENVIRONMENT} environment&quot;
+                sh &apos;mvn clean package&apos;
+            }
+        }
+
+        stage(&apos;Test&apos;) {
+            when {
+                expression { params.RUN_TESTS == true }
+            }
+            steps {
+                echo &quot;Running Tests...&quot;
+                sh &apos;mvn test&apos;
+            }
+        }
+    }
+}
+</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

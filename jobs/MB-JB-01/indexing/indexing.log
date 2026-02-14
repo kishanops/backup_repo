@@ -1,0 +1,44 @@
+Started
+[Tue Feb 10 19:18:07 UTC 2026] Starting branch indexing...
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+using GIT_SSH to set credentials 
+Verifying host key using known hosts file
+[8mha:////4LRcPEihPiHPlRgOIHZM1WTqF71IHZJtORDtizMW7zg6AAAAwB+LCAAAAAAAAP9djLENwjAQRY8gGIAS0VE77ihAVDQgRVAwQRSMfYl1tuwLStZgDWgYgmEo2IFE6fjN+19fes8vTGKAhakv0VFaOIrOqnTfehUsUnV0rFbbx2t79+8EkgNMrSLNJoNxHSzDLCvzWy5tTlqeOSDpTRNg/qfbDexlMGSUADS+Kx+Gk2H2cS2lt7VGimmpqOqJTmpkUVhUxHI53KKTcrdFjEYYF1lUqhU3FfCKRc7o6AcdrEU/1AAAAA==[0mYou're using 'Known hosts file' strategy to verify ssh host keys, but your known_hosts file does not exist, please go to 'Manage Jenkins' -> 'Security' -> 'Git Host Key Verification Configuration' and configure host key verification.
+ > git ls-remote --symref -- https://github.com/kishanops/Boardgame.git # timeout=10
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/caches/git-a531c5e10c9aa163db1d9caf0d181353/.git # timeout=10
+Setting origin to https://github.com/kishanops/Boardgame.git
+ > git config remote.origin.url https://github.com/kishanops/Boardgame.git # timeout=10
+Fetching & pruning origin...
+Listing remote references...
+ > git config --get remote.origin.url # timeout=10
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+using GIT_SSH to set credentials 
+Verifying host key using known hosts file
+[8mha:////4LRcPEihPiHPlRgOIHZM1WTqF71IHZJtORDtizMW7zg6AAAAwB+LCAAAAAAAAP9djLENwjAQRY8gGIAS0VE77ihAVDQgRVAwQRSMfYl1tuwLStZgDWgYgmEo2IFE6fjN+19fes8vTGKAhakv0VFaOIrOqnTfehUsUnV0rFbbx2t79+8EkgNMrSLNJoNxHSzDLCvzWy5tTlqeOSDpTRNg/qfbDexlMGSUADS+Kx+Gk2H2cS2lt7VGimmpqOqJTmpkUVhUxHI53KKTcrdFjEYYF1lUqhU3FfCKRc7o6AcdrEU/1AAAAA==[0mYou're using 'Known hosts file' strategy to verify ssh host keys, but your known_hosts file does not exist, please go to 'Manage Jenkins' -> 'Security' -> 'Git Host Key Verification Configuration' and configure host key verification.
+ > git ls-remote -h -- https://github.com/kishanops/Boardgame.git # timeout=10
+Fetching upstream changes from origin
+ > git config --get remote.origin.url # timeout=10
+using GIT_SSH to set credentials 
+Verifying host key using known hosts file
+[8mha:////4LRcPEihPiHPlRgOIHZM1WTqF71IHZJtORDtizMW7zg6AAAAwB+LCAAAAAAAAP9djLENwjAQRY8gGIAS0VE77ihAVDQgRVAwQRSMfYl1tuwLStZgDWgYgmEo2IFE6fjN+19fes8vTGKAhakv0VFaOIrOqnTfehUsUnV0rFbbx2t79+8EkgNMrSLNJoNxHSzDLCvzWy5tTlqeOSDpTRNg/qfbDexlMGSUADS+Kx+Gk2H2cS2lt7VGimmpqOqJTmpkUVhUxHI53KKTcrdFjEYYF1lUqhU3FfCKRc7o6AcdrEU/1AAAAA==[0mYou're using 'Known hosts file' strategy to verify ssh host keys, but your known_hosts file does not exist, please go to 'Manage Jenkins' -> 'Security' -> 'Git Host Key Verification Configuration' and configure host key verification.
+ > git fetch --no-tags --force --progress --prune -- origin +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking branches...
+  Checking branch main
+      ‘Jenkinsfile’ found
+    Met criteria
+No changes detected: main (still at 391b4e8967e62d1c3387907d0b22364eef255e23)
+  Checking branch dev
+      ‘Jenkinsfile’ found
+    Met criteria
+Changes detected: dev (391b4e8967e62d1c3387907d0b22364eef255e23 → ef32ddd64e7c9564b53c49cd95050b0e0823ce20)
+Scheduled build for branch: dev
+Processed 2 branches
+[Tue Feb 10 19:18:08 UTC 2026] Finished branch indexing. Indexing took 0.66 sec
+Evaluating orphaned items in MB-JB-01
+Will not remove feature-1 as it is only #1 in the list
+Will not remove DEV as it is only #2 in the list
+Will not remove feature-1 because it is new
+Will not remove DEV because it is new
+Finished: SUCCESS

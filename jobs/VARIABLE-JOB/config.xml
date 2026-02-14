@@ -1,0 +1,86 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1571.vb_423c255d6d9">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2277.v00573e73ddf1"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2277.v00573e73ddf1">
+      <jobProperties/>
+      <triggers/>
+      <parameters>
+        <string>DEPLOY_NEW</string>
+        <string>RUN_TESTS</string>
+      </parameters>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>2</daysToKeep>
+        <numToKeep>2</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+        <removeLastBuild>false</removeLastBuild>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>DEPLOY_NEW</name>
+          <description>Environment to deploy to</description>
+          <defaultValue>dev</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>RUN_TESTS</name>
+          <description>Run tests before deployment</description>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@4255.vd9c37f80fd8a_">
+    <script>pipeline {
+    agent {label &apos;Agent-Server&apos;}
+
+    parameters {
+        string(
+            name: &apos;DEPLOY_NEW&apos;,
+            defaultValue: &apos;dev&apos;,
+            description: &apos;Environment to deploy to&apos;
+        )
+
+        booleanParam(
+            name: &apos;RUN_TESTS&apos;,
+            defaultValue: true,
+            description: &apos;Run tests before deployment&apos;
+        )
+    }
+
+    stages {
+
+        stage(&apos;Built-In Vars&apos;) {
+            steps {
+                echo &quot;Build Number: ${env.BUILD_NUMBER}&quot;
+                echo &quot;Job Name: ${env.JOB_NAME}&quot;
+                echo &quot;Build URL: ${env.BUILD_URL}&quot;
+                echo &quot;Workspace: ${env.WORKSPACE}&quot;
+                echo &quot;Node Name: ${env.NODE_NAME}&quot;
+            }
+        }
+
+        stage(&apos;Pipeline Parameters&apos;) {
+            steps {
+                echo &quot;Deploy to: ${params.DEPLOY_NEW}&quot;
+                echo &quot;Run Tests: ${params.RUN_TESTS}&quot;
+            }
+        }
+    }
+}
+</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
